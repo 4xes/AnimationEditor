@@ -2,16 +2,9 @@ package com.petrushin;
 
 import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Bounds;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,12 +15,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- * Created by apetr_000 on 25.11.2014.
+ * Created by Petrushin Alexey on 25.11.2014.
  */
 public class Layout extends Application {
 
@@ -138,7 +130,7 @@ public class Layout extends Application {
                 public void handle(MouseEvent event) {
                     delta.x = getCenterX() - event.getSceneX();
                     delta.y = getCenterY() - event.getSceneY();
-
+                    //toFront();
                     setCoordinates(event, getCenterX(), getCenterY());
                 }
             });
@@ -180,37 +172,6 @@ public class Layout extends Application {
         }
     }
 
-    class Center {
-        private ReadOnlyDoubleWrapper centerX = new ReadOnlyDoubleWrapper();
-        private ReadOnlyDoubleWrapper centerY = new ReadOnlyDoubleWrapper();
-
-        public Center(Node node) {
-            calcCenter(node.getBoundsInParent());
-            node.boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
-                @Override public void changed(
-                        ObservableValue<? extends Bounds> observableValue,
-                        Bounds oldBounds,
-                        Bounds bounds
-                ) {
-                    calcCenter(bounds);
-                }
-            });
-        }
-
-        private void calcCenter(Bounds bounds) {
-            centerX.set(bounds.getMinX() + bounds.getWidth()  / 2);
-            centerY.set(bounds.getMinY() + bounds.getHeight() / 2);
-        }
-
-        ReadOnlyDoubleProperty centerXProperty() {
-            return centerX.getReadOnlyProperty();
-        }
-
-        ReadOnlyDoubleProperty centerYProperty() {
-            return centerY.getReadOnlyProperty();
-        }
-    }
-
     public HBox actionButtonBox(){
         HBox hbox = new HBox();
         hbox.getStyleClass().add("action-field");
@@ -231,8 +192,6 @@ public class Layout extends Application {
     }
 
     public Pane paneEditField(double width, double height){
-        HBox hbox = new HBox();
-
         Pane pane = new Pane();
         pane.setPrefSize(width, height);
 

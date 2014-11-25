@@ -5,7 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,10 +16,8 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.Random;
-
 /**
- * Created by apetr_000 on 24.11.2014.
+ * Created by Petrushin Alexey on 24.11.2014.
  */
 public class App extends Application {
 
@@ -161,7 +158,7 @@ public class App extends Application {
                 actionTarget.setText("Back");
             }
         });
-        grid.add(btnBack,4,0);
+        grid.add(btnBack, 4, 0);
         grid.setLayoutX(20);
         grid.setLayoutY(HEIGHT_SCENE -80);
 
