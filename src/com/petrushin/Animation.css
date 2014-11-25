@@ -1,9 +1,0 @@
-#btn-add{
-    -fx-background-color: yellowgreen;
-}
-#btn-add:hover{
-    -fx-background-color: yellow;
-}
-#btn-delete{
-    -fx-background-color: red;
-}

@@ -1,0 +1,24 @@
+.action-field {
+    -fx-padding: 0 0 10 10;
+    -fx-spacing: 10;
+}
+.action-num-scene{
+    -fx-text-fill: #ffffff;
+    -fx-padding: 5 0 0 0;
+    /*-fx-font-weight: bold;*/
+}
+.anchor{
+    -fx-fill: #ec008c;
+    -fx-stroke: #ffffff;
+}
+.bind-line{
+    -fx-stroke: #ffffff;
+    -fx-stroke-dash-array: 7 5;
+}
+
+.edit-field {
+    -fx-background-color: #2f3038;
+}
+.back{
+    -fx-background-color: #18181d;
+}

@@ -174,7 +174,6 @@ public class App extends Application {
         root.getChildren().add(line);
         root.getChildren().add(grid);
         Scene scene = new Scene(root,WIDTH_SCENE, HEIGHT_SCENE);
-        scene.getStylesheets().add(App.class.getResource("Animation.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
 
