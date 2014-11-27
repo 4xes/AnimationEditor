@@ -61,7 +61,7 @@ public class Layout extends Application {
         border.setBottom(actionField);
         border.setTop(paneEditField);
         VBox infoVBox = getInfo();
-        infoVBox.setLayoutX(WIDTH_EF-130);
+        infoVBox.setLayoutX(WIDTH_EF-170);
         infoVBox.setLayoutY(20);
         paneEditField.getChildren().add(infoVBox);
         Scene scene = new Scene(border);
@@ -91,7 +91,13 @@ public class Layout extends Application {
         textNewY = new Text("newY: ");
         textNewY.setFill(Color.WHITE);
 
-        vbox.getChildren().addAll(textLayoutX, textLayoutY, textMouseX, textMouseY, textNewX, textNewY);
+        Text textHintAddAnchor = new Text("Add point: double click");
+        textHintAddAnchor.setFill(Color.CYAN);
+        Text textHintAddLine = new Text("Add line: right click on point");
+        textHintAddLine.setFill(Color.CYAN);
+        Text textHintDeleteElem = new Text("Delete elem.: 2x right click");
+        textHintDeleteElem.setFill(Color.CYAN);
+        vbox.getChildren().addAll(textLayoutX, textLayoutY, textMouseX, textMouseY, textNewX, textNewY, textHintAddAnchor, textHintAddLine, textHintDeleteElem);
 
         return vbox;
     }
@@ -119,6 +125,16 @@ public class Layout extends Application {
             boundX.bind(centerXProperty());
             boundY.bind(centerYProperty());
             enableDrag();
+            setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    if(mouseEvent.getButton().equals(MouseButton.SECONDARY)){
+                        if(mouseEvent.getClickCount() == 1){
+                            System.out.println("Anchor left clicked");
+                        }
+                    }
+                }
+            });
         }
 
         public DoubleProperty getBoundX(){
@@ -182,6 +198,7 @@ public class Layout extends Application {
             endYProperty().bind(endY);
             getStyleClass().add("bind-line");
             setMouseTransparent(true);
+
         }
     }
 
@@ -215,7 +232,9 @@ public class Layout extends Application {
             public void handle(MouseEvent mouseEvent) {
                 if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
                     if(mouseEvent.getClickCount() == 2){
-                        System.out.println("Double clicked");
+                        Anchor anchor = new Anchor(mouseEvent.getSceneX(), mouseEvent.getSceneY());
+                        paneEditField.getChildren().add(anchor);
+
                     }
                 }
             }
