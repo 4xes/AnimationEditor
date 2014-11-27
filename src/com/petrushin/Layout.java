@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -17,6 +18,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.util.HashSet;
 
 /**
  * Created by Petrushin Alexey on 25.11.2014.
@@ -93,28 +96,38 @@ public class Layout extends Application {
         return vbox;
     }
     private void BoundeExample(){
-        DoubleProperty startX = new SimpleDoubleProperty(100);
-        DoubleProperty startY = new SimpleDoubleProperty(100);
-        DoubleProperty endX   = new SimpleDoubleProperty(300);
-        DoubleProperty endY   = new SimpleDoubleProperty(200);
+        Anchor anchor1    = new Anchor(100, 100);
+        Anchor anchor2      = new Anchor(300,   200);
+        Anchor anchor3      = new Anchor(400,   200);
 
-        Anchor start    = new Anchor(startX, startY);
-        Anchor end      = new Anchor(endX,   endY);
+        Line line1 = new BoundLine(anchor1.getBoundX(), anchor1.getBoundY(), anchor2.getBoundX(), anchor2.getBoundY());
+        Line line2 = new BoundLine(anchor3.getBoundX(), anchor3.getBoundY(), anchor2.getBoundX(), anchor2.getBoundY());
+        Line line3 = new BoundLine(anchor1.getBoundX(), anchor1.getBoundY(), anchor3.getBoundX(), anchor3.getBoundY());
 
-        Line line = new BoundLine(startX, startY, endX, endY);
-
-        paneEditField.getChildren().addAll(start,end,line);
+        paneEditField.getChildren().addAll(anchor1,anchor2,anchor3,line1, line2, line3);
     }
 
     public class Anchor extends Circle{
-        public Anchor(DoubleProperty x, DoubleProperty y){
-            super(x.get(), y.get(), 10);
-            getStyleClass().add("anchor");
-            x.bind(centerXProperty());
-            y.bind(centerYProperty());
-            enableDrag();
+        private DoubleProperty boundX = new SimpleDoubleProperty();
+        private DoubleProperty boundY = new SimpleDoubleProperty();
 
+        public Anchor(double x, double y){
+            super(x, y, 10);
+            boundX.set(x);
+            boundY.set(y);
+            getStyleClass().add("anchor");
+            boundX.bind(centerXProperty());
+            boundY.bind(centerYProperty());
+            enableDrag();
         }
+
+        public DoubleProperty getBoundX(){
+            return boundX;
+        }
+        public DoubleProperty getBoundY(){
+            return boundY;
+        }
+
         private void setCoordinates(MouseEvent event, double newX, double newY){
             textLayoutX.setText("centerX: " + getCenterX());
             textLayoutY.setText("centerY: " + getCenterY());
@@ -196,6 +209,17 @@ public class Layout extends Application {
         pane.setPrefSize(width, height);
 
         pane.getStyleClass().add("edit-field");
+
+        pane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                    if(mouseEvent.getClickCount() == 2){
+                        System.out.println("Double clicked");
+                    }
+                }
+            }
+        });
 
         return pane;
     }
