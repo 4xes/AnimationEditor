@@ -13,6 +13,7 @@
 }
 .bind-line{
     -fx-stroke: #ffffff;
+    -fx-stroke-width: 2;
     -fx-stroke-dash-array: 7 5;
 }
 

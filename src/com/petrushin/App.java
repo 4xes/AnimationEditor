@@ -1,189 +1,130 @@
 package com.petrushin;
 
+import com.petrushin.figures.Anchor;
+import com.petrushin.figures.BoundLine;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.*;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- * Created by Petrushin Alexey on 24.11.2014.
+ * Created by Petrushin Alexey on 25.11.2014.
  */
 public class App extends Application {
 
+    public Button btnAdd;
+    public Button btnDelete;
+    public Button btnNext;
+    public Button btnBack;
+    public Button btnCopy;
 
-    private static final int WIDTH_SCENE = 700;
-    private static final int HEIGHT_SCENE = 550;
+    public Pane field;
 
-    private Text textX;
-    private Text textY;
     private Text textLayoutX;
     private Text textLayoutY;
-    public class Delta{
-        public double x;
-        public double y;
-    }
-    final Delta delta = new Delta();
+    private Text textMouseX;
+    private Text textMouseY;
+    private Text textNewX;
+    private Text textNewY;
 
-    private int currentScene = 1;
-    private int sizeScene = 1;
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        BorderPane border = new BorderPane();
+        border.getStyleClass().add("back");
 
+
+        HBox footerBox = footerBox();
+        VBox rightBox = rightBox();
+
+
+        field = new Field();
+        field.getChildren().add(rightBox);
+        border.setTop(field);
+        border.setMargin(field, new Insets(Field.MARGIN_EF));
+
+        border.setBottom(footerBox);
+
+        BoundExample();
+        Scene scene = new Scene(border);
+        scene.getStylesheets().add("com/petrushin/layout/css/style.css");
         primaryStage.setTitle("Animation Editor");
-
-        Group root = new Group();
-
-        textX = new Text("x: ");
-        textX.setX(WIDTH_SCENE - 150);
-        textX.setY(HEIGHT_SCENE - 70);
-        root.getChildren().add(textX);
-
-        textY = new Text("y: ");
-        textY.setX(WIDTH_SCENE - 150);
-        textY.setY(HEIGHT_SCENE - 50);
-        root.getChildren().add(textY);
-
-        textLayoutX = new Text("Layout delta x: ");
-        textLayoutX.setX(WIDTH_SCENE - 150);
-        textLayoutX.setY(HEIGHT_SCENE - 30);
-        root.getChildren().add(textLayoutX);
-
-        textLayoutY = new Text("Layout delta y: ");
-        textLayoutY.setX(WIDTH_SCENE - 150);
-        textLayoutY.setY(HEIGHT_SCENE - 10);
-        root.getChildren().add(textLayoutY);
-
-
-
-        for(int i = 0; i < 6; i++){
-            final Circle circle = new Circle();
-            circle.setCenterY(50 + i*20);
-            circle.setCenterX(50 + i * 20);
-            circle.setRadius(10);
-
-            circle.setFill(Color.AQUA);
-            circle.setStroke(Color.BROWN);
-
-            circle.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-
-                    delta.x = circle.getCenterX() - event.getX();
-                    delta.y = circle.getCenterY() - event.getY();
-                    setCoordinates(event);
-                }
-            });
-            circle.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    setCoordinates(event);
-                }
-            });
-            circle.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    setCoordinates(event);
-                    circle.setCenterX(event.getSceneX() + delta.x);
-                    circle.setCenterY(event.getSceneY() + delta.y);
-                }
-            });
-
-            root.getChildren().add(circle);
-        }
-
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.BOTTOM_LEFT);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25,25,25,25));
-
-        final Text actionTarget = new Text("Scene 1");
-        grid.add(actionTarget, 0,0);
-
-        Button btnAdd = new Button();
-        btnAdd.setText("Add");
-        btnAdd.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                currentScene++;
-                sizeScene++;
-                actionTarget.setText("Scene " + currentScene + " of " + sizeScene);
-            }
-        });
-        grid.add(btnAdd,1,0);
-
-        Button btnDelete = new Button();
-        btnDelete.setText("Delete");
-        btnDelete.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(sizeScene > 1){
-                    currentScene--;
-                    sizeScene--;
-                }
-                actionTarget.setText("Scene " + currentScene + " of " + sizeScene);
-            }
-        });
-        grid.add(btnDelete,2,0);
-
-        Button btnNext = new Button();
-        btnNext.setText("Next");
-        btnNext.setDisable(true);
-        btnNext.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                actionTarget.setText("Next");
-            }
-        });
-        grid.add(btnNext,3,0);
-
-        Button btnBack = new Button();
-        btnBack.setText("Back");
-        btnBack.setDisable(true);
-        btnNext.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                actionTarget.setText("Back");
-            }
-        });
-        grid.add(btnBack, 4, 0);
-        grid.setLayoutX(20);
-        grid.setLayoutY(HEIGHT_SCENE -80);
-
-        Line line = new Line();
-        line.setStartX(100);
-        line.setStartY(100);
-        line.setEndX(200);
-        line.setEndY(200);
-
-        root.getChildren().add(line);
-        root.getChildren().add(grid);
-        Scene scene = new Scene(root,WIDTH_SCENE, HEIGHT_SCENE);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-    }
-    private void setCoordinates(MouseEvent event){
-        textX.setText("x: " + String.valueOf(event.getSceneX()));
-        textY.setText("y: " + String.valueOf(event.getSceneY()));
-        textLayoutX.setText("Layout delta x: " + String.valueOf(delta.x));
-        textLayoutY.setText("Layout delta y: " + String.valueOf(delta.y));
     }
 
-    public static void main(String args[]){
-        launch(args);
+    private void BoundExample(){
+        Anchor anchor1    = new Anchor(100, 100);
+        Anchor anchor2      = new Anchor(300,   200);
+        Anchor anchor3      = new Anchor(400,   200);
+
+        Line line1 = new BoundLine(anchor1, anchor2);
+        Line line2 = new BoundLine(anchor3, anchor2);
+        Line line3 = new BoundLine(anchor1, anchor3);
+
+        field.getChildren().addAll(line1, line2, line3,anchor1,anchor2,anchor3);
     }
 
+    private VBox rightBox(){
+        VBox vbox = new VBox();
+        vbox.setLayoutX(Field.WIDTH_EF - 170);
+        vbox.setLayoutY(20);
+
+        vbox.setPadding(new Insets(10.0));
+        vbox.setSpacing(8);
+
+        textLayoutX = new Text("layoutX: ");
+        textLayoutX.setFill(Color.WHITE);
+        textLayoutY = new Text("LayoutY: ");
+        textLayoutY.setFill(Color.WHITE);
+
+        textMouseX = new Text("mouseX: ");
+        textMouseX.setFill(Color.WHITE);
+        textMouseY = new Text("mouseY: ");
+        textMouseY.setFill(Color.WHITE);
+
+        textNewX = new Text("newX: ");
+        textNewX.setFill(Color.WHITE);
+        textNewY = new Text("newY: ");
+        textNewY.setFill(Color.WHITE);
+
+        Text textHintAddAnchor = new Text("Add point: double click");
+        textHintAddAnchor.setFill(Color.CYAN);
+        Text textHintAddLine = new Text("Add line: right click on point");
+        textHintAddLine.setFill(Color.CYAN);
+        Text textHintDeleteElem = new Text("Delete elem.: 2x right click");
+        textHintDeleteElem.setFill(Color.CYAN);
+        vbox.getChildren().addAll(textLayoutX, textLayoutY, textMouseX, textMouseY, textNewX, textNewY, textHintAddAnchor, textHintAddLine, textHintDeleteElem);
+
+        return vbox;
+    }
+
+    public HBox footerBox(){
+        HBox hbox = new HBox();
+        hbox.getStyleClass().add("action-field");
+
+        Label actionNumberScene = new Label("Scene 1");
+        actionNumberScene.getStyleClass().add("action-num-scene");
+
+        btnAdd = new Button("Add");
+        btnDelete = new Button("Delete");
+        btnDelete.setDisable(true);
+        btnNext = new Button("Next");
+        btnNext.setDisable(true);
+        btnBack = new Button("Back");
+        btnBack.setDisable(true);
+        btnCopy = new Button("Copy");
+        hbox.getChildren().addAll(actionNumberScene, btnAdd, btnDelete, btnNext, btnBack, btnCopy);
+        return hbox;
+    }
 }
