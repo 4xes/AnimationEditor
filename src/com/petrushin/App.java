@@ -36,7 +36,7 @@ public class App extends Application {
     private Text textNewX;
     private Text textNewY;
 
-
+    public static boolean binding = false;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
