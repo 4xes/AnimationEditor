@@ -1,5 +1,6 @@
 package com.petrushin.figures;
 
+import com.petrushin.Field;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -12,6 +13,17 @@ import javafx.scene.shape.Line;
 public class BoundLine extends Line{
     private Anchor start;
     private Anchor end;
+
+    public BoundLine(Anchor start){
+        this.start = start;
+        this.start.bind(this);
+
+        getStyleClass().add("bind-line");
+        //Binding property
+        bind();
+    }
+
+
 
     public BoundLine(Anchor start, Anchor end) {
         this.start = start;
@@ -73,6 +85,8 @@ public class BoundLine extends Line{
             endYProperty().bind(end.getBoundY());
         }
     }
+
+
 
     public void unbind(){
         startXProperty().unbind();

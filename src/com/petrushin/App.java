@@ -27,7 +27,7 @@ public class App extends Application {
     public Button btnBack;
     public Button btnCopy;
 
-    public Pane field;
+    public Field field;
 
     private Text textLayoutX;
     private Text textLayoutY;
@@ -64,15 +64,21 @@ public class App extends Application {
     }
 
     private void BoundExample(){
-        Anchor anchor1    = new Anchor(100, 100);
-        Anchor anchor2      = new Anchor(300,   200);
-        Anchor anchor3      = new Anchor(400,   200);
+        //Example 1
+        Anchor anchor1 = new Anchor(100, 100);
+        Anchor anchor2 = new Anchor(300,   200);
+        Anchor anchor3 = new Anchor(400,   200);
 
         Line line1 = new BoundLine(anchor1, anchor2);
         Line line2 = new BoundLine(anchor3, anchor2);
         Line line3 = new BoundLine(anchor1, anchor3);
 
-        field.getChildren().addAll(line1, line2, line3,anchor1,anchor2,anchor3);
+        field.getChildren().addAll(line1, line2, line3, anchor1,anchor2,anchor3);
+
+        //Example 2
+        Anchor anchor4 = new Anchor(340, 300);
+
+        field.getChildren().addAll(anchor4);
     }
 
     private VBox rightBox(){

@@ -4,7 +4,9 @@ import com.petrushin.Field;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.EventHandler;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
@@ -62,6 +64,7 @@ public class Anchor extends Circle {
     private void initEvents() {
         final Delta delta = new Delta();
 
+
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -100,22 +103,18 @@ public class Anchor extends Circle {
         setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                double newX = event.getSceneX() + delta.x;
-                double newY = event.getSceneY() + delta.y;
-                if(newX < 0){
-                    newX = 0;
-                }
-                if(newY < 0){
-                    newY = 0;
-                }
-                if(newX > Field.RIGHT_EF){
-                    newX = Field.RIGHT_EF;
-                }
-                if(newY > Field.BOTTOM_EF){
-                    newY = Field.BOTTOM_EF;
-                }
-                setCenterX(newX);
-                setCenterY(newY);
+                double x = event.getSceneX() + delta.x;
+                double y = event.getSceneY() + delta.y;
+                if(x < 0)
+                    x = 0;
+                if(y < 0)
+                    y = 0;
+                if(x > Field.RIGHT_EF)
+                    x = Field.RIGHT_EF;
+                if(y > Field.BOTTOM_EF)
+                    y = Field.BOTTOM_EF;
+                setCenterX(x);
+                setCenterY(y);
             }
         });
     }
