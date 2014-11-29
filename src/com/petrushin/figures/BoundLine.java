@@ -34,18 +34,6 @@ public class BoundLine extends Line{
         getStyleClass().add("bind-line");
         //Binding property
         bind();
-
-
-        setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if(event.getButton().equals(MouseButton.SECONDARY)){
-                    if(event.getClickCount() == 1){
-                        delete();
-                    }
-                }
-            }
-        });
     }
     public void bindEnd(Anchor bindAnchor){
         this.end = bindAnchor;

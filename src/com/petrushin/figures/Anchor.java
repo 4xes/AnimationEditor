@@ -27,10 +27,11 @@ public class Anchor extends Circle {
 
     public boolean haveCommonLines(Anchor anchor){
         Iterator<BoundLine> iterator = anchor.boundLines.iterator();
-        for(Object line = iterator.next(); line != null; line = iterator.next()){
-            if(boundLines.contains(line))
+
+        while(iterator.hasNext()){
+            if(boundLines.contains(iterator.next())){
                 return true;
-            System.out.println("seaching");
+            }
         }
         return false;
     }
@@ -87,17 +88,6 @@ public class Anchor extends Circle {
                 delta.y = getCenterY() - event.getSceneY();
                 //move up
                 toFront();
-            }
-        });
-
-        setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if(event.getButton().equals(MouseButton.SECONDARY)){
-                    if(event.getClickCount() == 1){
-                        delete();
-                    }
-                }
             }
         });
 

@@ -28,6 +28,7 @@ public class Field extends Pane {
     private Anchor bindingAnchor;
 
 
+
     EventHandler<MouseEvent> handlerOnMouseEnteredTarget = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
@@ -72,6 +73,7 @@ public class Field extends Pane {
         anchor.toFront();
         addEventHandler(MouseEvent.MOUSE_MOVED, handlerOnMouseMoved);
         addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET, handlerOnMouseEnteredTarget);
+
     }
 
     //if clicked to field
@@ -109,30 +111,34 @@ public class Field extends Pane {
     }
 
     private void initEvents(){
+
         setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent mouseEvent) {
-
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2 && bindingLine == null) {
-                        Anchor anchor = new Anchor(mouseEvent.getX(), mouseEvent.getY());
+            public void handle(MouseEvent event) {
+                if(!event.isStillSincePress()){
+                    return;
+                }
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                    if (event.getClickCount() == 2 && bindingLine == null) {
+                        Anchor anchor = new Anchor(event.getX(), event.getY());
                         getChildren().add(anchor);
                     }
-                    if(mouseEvent.getClickCount() == 1){
-                        Object target = mouseEvent.getTarget();
-                        if(target instanceof Anchor){
+                    if (event.getClickCount() == 1) {
+                        Object target = event.getTarget();
+                        if (target instanceof Anchor) {
                             Anchor anchor = (Anchor) target;
-                            if(bindingLine == null){
-                                startBinding(anchor, mouseEvent.getX(), mouseEvent.getY());
-                            }else{
+                            if (bindingLine == null) {
+                                startBinding(anchor, event.getX(), event.getY());
+                            } else {
                                 System.out.println(anchor + " " + bindingAnchor);
-                                if(anchor == bindingAnchor){
+                                if (anchor == bindingAnchor) {
                                     System.out.println(anchor);
                                     cancelBinding();
-                                }else{
+                                } else {
                                     System.out.println(bindingAnchor.size() + " " + anchor.size());
-                                    if(bindingAnchor.size() == 1 || anchor.size() == 0){
-
+                                    if (bindingAnchor.size() == 1 || anchor.size() == 0) {
+                                        endBinding(anchor);
+                                    } else if (!anchor.haveCommonLines(bindingAnchor)) {
                                         endBinding(anchor);
                                     }
                                 }
@@ -140,6 +146,21 @@ public class Field extends Pane {
                         }
                     }
                 }
+                if (event.getButton().equals(MouseButton.SECONDARY)) {
+                    Object target = event.getTarget();
+                    if (bindingLine == null) {
+
+                        if (target instanceof Anchor) {
+                            ((Anchor) target).delete();
+                        } else if (target instanceof BoundLine) {
+                            ((BoundLine) target).delete();
+                        }
+
+                    } else if (bindingLine != null) {
+                        cancelBinding();
+                    }
+                }
+
             }
         });
 

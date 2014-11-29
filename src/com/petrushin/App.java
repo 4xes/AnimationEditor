@@ -29,13 +29,6 @@ public class App extends Application {
 
     public Field field;
 
-    private Text textLayoutX;
-    private Text textLayoutY;
-    private Text textMouseX;
-    private Text textMouseY;
-    private Text textNewX;
-    private Text textNewY;
-
     public static boolean binding = false;
 
     @Override
@@ -89,28 +82,15 @@ public class App extends Application {
         vbox.setPadding(new Insets(10.0));
         vbox.setSpacing(8);
 
-        textLayoutX = new Text("layoutX: ");
-        textLayoutX.setFill(Color.WHITE);
-        textLayoutY = new Text("LayoutY: ");
-        textLayoutY.setFill(Color.WHITE);
-
-        textMouseX = new Text("mouseX: ");
-        textMouseX.setFill(Color.WHITE);
-        textMouseY = new Text("mouseY: ");
-        textMouseY.setFill(Color.WHITE);
-
-        textNewX = new Text("newX: ");
-        textNewX.setFill(Color.WHITE);
-        textNewY = new Text("newY: ");
-        textNewY.setFill(Color.WHITE);
-
         Text textHintAddAnchor = new Text("Add point: double click");
         textHintAddAnchor.setFill(Color.CYAN);
-        Text textHintAddLine = new Text("Add line: right click on point");
+        Text textHintAddLine = new Text("Add line: left click on point");
         textHintAddLine.setFill(Color.CYAN);
-        Text textHintDeleteElem = new Text("Delete elem.: 2x right click");
+        Text textHintDeleteElem = new Text("Delete: right click");
         textHintDeleteElem.setFill(Color.CYAN);
-        vbox.getChildren().addAll(textLayoutX, textLayoutY, textMouseX, textMouseY, textNewX, textNewY, textHintAddAnchor, textHintAddLine, textHintDeleteElem);
+        Text textHintStartBind = new Text("Stop bind: right click");
+        textHintStartBind.setFill(Color.CYAN);
+        vbox.getChildren().addAll(textHintAddAnchor, textHintAddLine, textHintDeleteElem,textHintStartBind);
 
         return vbox;
     }
