@@ -1,17 +1,11 @@
 package com.petrushin;
 
-import com.petrushin.figures.Anchor;
-import com.petrushin.figures.BoundLine;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.event.Event;
+import com.petrushin.shape.Anchor;
+import com.petrushin.shape.BoundLine;
 import javafx.event.EventHandler;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Line;
 
 /**
  * Created by Petrushin Alexey on 28.11.2014.
@@ -26,6 +20,7 @@ public class Field extends Pane {
 
     private BoundLine bindingLine;
     private Anchor bindingAnchor;
+
 
 
 

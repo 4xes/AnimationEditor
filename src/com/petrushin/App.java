@@ -1,15 +1,16 @@
 package com.petrushin;
 
-import com.petrushin.figures.Anchor;
-import com.petrushin.figures.BoundLine;
+import com.petrushin.shape.Anchor;
+import com.petrushin.shape.BoundLine;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -26,6 +27,7 @@ public class App extends Application {
     public Button btnNext;
     public Button btnBack;
     public Button btnCopy;
+    public Button btnClear;
 
     public Field field;
 
@@ -110,7 +112,15 @@ public class App extends Application {
         btnBack = new Button("Back");
         btnBack.setDisable(true);
         btnCopy = new Button("Copy");
-        hbox.getChildren().addAll(actionNumberScene, btnAdd, btnDelete, btnNext, btnBack, btnCopy);
+        btnClear = new Button("Clear");
+        btnClear.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            }
+        });
+
+        hbox.getChildren().addAll(actionNumberScene, btnAdd, btnDelete, btnNext, btnBack, btnCopy, btnClear);
         return hbox;
     }
 }

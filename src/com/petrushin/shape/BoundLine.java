@@ -1,9 +1,5 @@
-package com.petrushin.figures;
+package com.petrushin.shape;
 
-import com.petrushin.Field;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 
