@@ -47,6 +47,11 @@ public class BoundLine extends Line{
             }
         });
     }
+    public void bindEnd(Anchor bindAnchor){
+        this.end = bindAnchor;
+        this.end.bind(this);
+        bind();
+    }
     //for delete from anchor
     public void delete(Anchor who){
         unbind();

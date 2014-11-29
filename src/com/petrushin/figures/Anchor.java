@@ -21,6 +21,20 @@ public class Anchor extends Circle {
 
     private Set<BoundLine> boundLines = new HashSet<BoundLine>();
 
+    public int size(){
+        return boundLines.size();
+    }
+
+    public boolean haveCommonLines(Anchor anchor){
+        Iterator<BoundLine> iterator = anchor.boundLines.iterator();
+        for(Object line = iterator.next(); line != null; line = iterator.next()){
+            if(boundLines.contains(line))
+                return true;
+            System.out.println("seaching");
+        }
+        return false;
+    }
+
     public Anchor(double x, double y){
         super(x, y, 10);
         getStyleClass().add("anchor");
@@ -31,6 +45,8 @@ public class Anchor extends Circle {
         boundY.bind(centerYProperty());
         initEvents();
     }
+
+
 
     public void unbind(BoundLine line){
         boundLines.remove(line);
@@ -64,7 +80,6 @@ public class Anchor extends Circle {
     private void initEvents() {
         final Delta delta = new Delta();
 
-
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -89,14 +104,14 @@ public class Anchor extends Circle {
         setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("Entered");
+                //System.out.println("Entered");
             }
         });
 
         setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("Exited");
+                //System.out.println("Exited");
             }
         });
 

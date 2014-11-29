@@ -25,21 +25,19 @@ public class Field extends Pane {
     public static final double BOTTOM_EF = HEIGHT_EF;
 
     private BoundLine bindingLine;
-    private Anchor fromBinding;
-    private Anchor enteredAnchor;
+    private Anchor bindingAnchor;
+
 
     EventHandler<MouseEvent> handlerOnMouseEnteredTarget = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
             Object target = event.getTarget();
             if(event.getTarget() instanceof Anchor){
-                enteredAnchor = (Anchor) target;
+                //enteredAnchor = (Anchor) target;
 
             };
         }
     };
-
-
 
     EventHandler<MouseEvent> handlerOnMouseMoved = new EventHandler<MouseEvent>() {
         @Override
@@ -69,17 +67,34 @@ public class Field extends Pane {
         bindingLine.setEndX(x);
         bindingLine.setEndY(y);
         getChildren().add(bindingLine);
+        bindingAnchor = anchor;
+        bindingLine.toBack();
         anchor.toFront();
         addEventHandler(MouseEvent.MOUSE_MOVED, handlerOnMouseMoved);
         addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET, handlerOnMouseEnteredTarget);
     }
 
+    //if clicked to field
+    public void endBindingWithNewAnchor(double x, double y){
+
+    }
+
+
     public void cancelBinding(){
         if(bindingLine != null){
+            removeEventHandler(MouseEvent.MOUSE_MOVED, handlerOnMouseMoved);
             bindingLine.delete();
             bindingLine = null;
-            removeEventHandler(MouseEvent.MOUSE_MOVED, handlerOnMouseMoved);
+
         }
+    }
+
+    public void endBinding(Anchor anchor){
+        System.out.println("endBinding");
+        removeEventHandler(MouseEvent.MOUSE_MOVED, handlerOnMouseMoved);
+        bindingLine.bindEnd(anchor);
+        bindingLine = null;
+        bindingAnchor = null;
     }
 
 
@@ -97,15 +112,31 @@ public class Field extends Pane {
         setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2) {
+                    if (mouseEvent.getClickCount() == 2 && bindingLine == null) {
                         Anchor anchor = new Anchor(mouseEvent.getX(), mouseEvent.getY());
                         getChildren().add(anchor);
                     }
                     if(mouseEvent.getClickCount() == 1){
                         Object target = mouseEvent.getTarget();
                         if(target instanceof Anchor){
-                            startBinding((Anchor)target, mouseEvent.getX(), mouseEvent.getY());
+                            Anchor anchor = (Anchor) target;
+                            if(bindingLine == null){
+                                startBinding(anchor, mouseEvent.getX(), mouseEvent.getY());
+                            }else{
+                                System.out.println(anchor + " " + bindingAnchor);
+                                if(anchor == bindingAnchor){
+                                    System.out.println(anchor);
+                                    cancelBinding();
+                                }else{
+                                    System.out.println(bindingAnchor.size() + " " + anchor.size());
+                                    if(bindingAnchor.size() == 1 || anchor.size() == 0){
+
+                                        endBinding(anchor);
+                                    }
+                                }
+                            }
                         }
                     }
                 }
