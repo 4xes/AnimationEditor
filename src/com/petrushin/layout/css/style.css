@@ -23,3 +23,18 @@
 .back{
     -fx-background-color: #18181d;
 }
+.text-hint{
+    -fx-font-size: 13;
+    -fx-fill: #ec008c;
+    -fx-underline: false;
+}
+
+.text-hint:hover{
+    -fx-cursor: hand;
+    -fx-underline: true;
+    -fx-fill: #ff0d96;
+}
+
+Text{
+    -fx-fill: #ffffff;
+}

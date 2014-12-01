@@ -12,7 +12,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -22,40 +21,68 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
-    public Button btnAdd;
-    public Button btnDelete;
-    public Button btnNext;
-    public Button btnBack;
-    public Button btnCopy;
-    public Button btnClear;
+    private BorderPane borderPane;
 
-    public Field field;
+    private Button btnAdd;
+    private Button btnDelete;
+    private Button btnNext;
+    private Button btnBack;
+    private Button btnCopy;
+    private Button btnClear;
+    private Button btnTest;
 
-    public static boolean binding = false;
+    private HBox actions;
+    private VBox hint;
+    private Field field;
+
+    private Text textHint;
+    private static boolean flagHint = false;
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        BorderPane border = new BorderPane();
-        border.getStyleClass().add("back");
+        borderPane = border();
+        hint = hint();
 
-
-        HBox footerBox = footerBox();
-        VBox rightBox = rightBox();
-
+        textHint = textHint();
+        borderPane.getChildren().add(textHint);
 
         field = new Field();
-        field.getChildren().add(rightBox);
-        border.setTop(field);
-        border.setMargin(field, new Insets(Field.MARGIN_EF));
+        borderPane.setTop(field);
+        borderPane.setMargin(field, new Insets(20, 10, 10, 10));
 
-        border.setBottom(footerBox);
+        actions = actions();
+        borderPane.setBottom(actions);
 
-        BoundExample();
-        Scene scene = new Scene(border);
+        Scene scene = new Scene(borderPane);
         scene.getStylesheets().add("com/petrushin/layout/css/style.css");
         primaryStage.setTitle("Animation Editor");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+    private BorderPane border(){
+        BorderPane border = new BorderPane();
+        border.getStyleClass().add("back");
+        return border;
+    }
+
+    private Text textHint(){
+        textHint = new Text(550,14,"show hint");
+        textHint.getStyleClass().add("text-hint");
+        textHint.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(flagHint){
+                    borderPane.getChildren().remove(hint);
+                    textHint.setText("show hint");
+                }else{
+                    borderPane.getChildren().add(hint);
+                    textHint.setText("hide hint");
+                }
+                flagHint = !flagHint;
+            }
+        });
+        return textHint;
     }
 
     private void BoundExample(){
@@ -76,32 +103,26 @@ public class App extends Application {
         field.getChildren().addAll(anchor4);
     }
 
-    private VBox rightBox(){
+    private VBox hint(){
         VBox vbox = new VBox();
-        vbox.setLayoutX(Field.WIDTH_EF - 170);
-        vbox.setLayoutY(20);
-
-        vbox.setPadding(new Insets(10.0));
+        vbox.setLayoutX(550);
+        vbox.setLayoutY(30);
         vbox.setSpacing(8);
 
         Text textHintAddAnchor = new Text("Add point: double click");
-        textHintAddAnchor.setFill(Color.CYAN);
         Text textHintAddLine = new Text("Add line: left click on point");
-        textHintAddLine.setFill(Color.CYAN);
         Text textHintDeleteElem = new Text("Delete: right click");
-        textHintDeleteElem.setFill(Color.CYAN);
         Text textHintStartBind = new Text("Stop bind: right click");
-        textHintStartBind.setFill(Color.CYAN);
         vbox.getChildren().addAll(textHintAddAnchor, textHintAddLine, textHintDeleteElem,textHintStartBind);
 
         return vbox;
     }
 
-    public HBox footerBox(){
+    public HBox actions(){
         HBox hbox = new HBox();
         hbox.getStyleClass().add("action-field");
 
-        Label actionNumberScene = new Label("Scene 1");
+        Label actionNumberScene = new Label("Scene 1     ");
         actionNumberScene.getStyleClass().add("action-num-scene");
 
         btnAdd = new Button("Add");
@@ -119,8 +140,21 @@ public class App extends Application {
 
             }
         });
+        btnTest = new Button("Test");
+        btnTest.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                field.test();
+            }
+        });
 
-        hbox.getChildren().addAll(actionNumberScene, btnAdd, btnDelete, btnNext, btnBack, btnCopy, btnClear);
+        hbox.getChildren().addAll(actionNumberScene, btnAdd, btnDelete, btnNext, btnBack, btnCopy, btnClear,btnTest);
         return hbox;
+    }
+
+
+
+    public static void main(String argv[]){
+        launch(argv);
     }
 }

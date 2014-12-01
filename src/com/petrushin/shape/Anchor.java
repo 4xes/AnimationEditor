@@ -54,7 +54,6 @@ public class Anchor extends Circle {
     }
 
     public void delete(){
-        System.out.println(boundLines.size());
         Iterator<BoundLine> iterator = boundLines.iterator();
         while (iterator.hasNext()) {
             BoundLine element = iterator.next();
@@ -85,20 +84,6 @@ public class Anchor extends Circle {
                 delta.y = getCenterY() - event.getSceneY();
                 //move up
                 toFront();
-            }
-        });
-
-        setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                //System.out.println("Entered");
-            }
-        });
-
-        setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                //System.out.println("Exited");
             }
         });
 
