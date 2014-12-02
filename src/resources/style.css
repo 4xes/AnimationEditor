@@ -1,3 +1,13 @@
+@font-face {
+    font-family: "Metrize-Icons";
+    src: url("Metrize-Icons.ttf");
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("Roboto-Bold.ttf");
+}
+
 .action-field {
     -fx-padding: 0 0 10 10;
     -fx-spacing: 10;
@@ -6,6 +16,10 @@
     -fx-text-fill: #ffffff;
     -fx-padding: 5 0 0 0;
     /*-fx-font-weight: bold;*/
+}
+
+.action-button{
+    -fx-background-color: transparent;
 }
 .anchor{
     -fx-fill: #ec008c;
@@ -17,10 +31,10 @@
     -fx-stroke-dash-array: 7 5;
 }
 
-.edit-field {
+Field {
     -fx-background-color: #2f3038;
 }
-.back{
+BorderPane {
     -fx-background-color: #18181d;
 }
 .text-hint{
@@ -35,6 +49,9 @@
     -fx-fill: #ff0d96;
 }
 
-Text{
+Text {
     -fx-fill: #ffffff;
 }
+
+
+

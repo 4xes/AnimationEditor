@@ -5,6 +5,7 @@ import com.petrushin.shape.BoundLine;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -26,9 +27,6 @@ public class Field extends Pane {
     private Anchor bindingAnchor;
 
     Storage storage = new Storage();
-
-    HashSet<Shape> frame = new HashSet<Shape>();
-    int numOfFrame = 0;
 
     EventHandler<MouseEvent> handlerOnMouseMoved = new EventHandler<MouseEvent>() {
         @Override
@@ -73,6 +71,7 @@ public class Field extends Pane {
             bindingLine = null;
 
         }
+
     }
 
     public void endBinding(Anchor anchor){
@@ -93,9 +92,18 @@ public class Field extends Pane {
         //delete default focus
         requestFocus();
     }
-    public void Next(){
+    public void next(){
+        this.save();
+        this.getChildren().removeAll(this.getChildren());
+        this.getChildren().addAll(storage.nextFrame());
+    }
+    public void clear(){
 
     }
+    public void save(){
+        storage.saveFrame(this.getChildren());
+    }
+
 
     public void test(){
         ObservableList<Node> list = getChildren();
@@ -114,18 +122,17 @@ public class Field extends Pane {
                 if(!event.isStillSincePress()){
                     return;
                 }
-                Object target = event.getTarget();
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
 
-                    if (event.getClickCount() == 2 && bindingLine == null && !(target instanceof Anchor)) {
+                    if (!(event.getTarget().getClass().equals(Anchor.class)) && event.getClickCount() == 2 && bindingLine == null){
 
                         Anchor anchor = new Anchor(event.getX(), event.getY());
                         getChildren().add(anchor);
                     }
                     if (event.getClickCount() == 1) {
 
-                        if (target instanceof Anchor) {
-                            Anchor anchor = (Anchor) target;
+                        if (event.getTarget().getClass().equals(Anchor.class)) {
+                            Anchor anchor = (Anchor) event.getTarget();
                             if (bindingLine == null) {
                                 startBinding(anchor, event.getX(), event.getY());
                             } else {
@@ -146,10 +153,10 @@ public class Field extends Pane {
                 if (event.getButton().equals(MouseButton.SECONDARY)) {
                     if (bindingLine == null) {
 
-                        if (target instanceof Anchor) {
-                            ((Anchor) target).delete();
-                        } else if (target instanceof BoundLine) {
-                            ((BoundLine) target).delete();
+                        if (event.getTarget().getClass().equals(Anchor.class)) {
+                            ((Anchor) event.getTarget()).delete();
+                        } else if (event.getTarget().getClass().equals(BoundLine.class)) {
+                            ((BoundLine) event.getTarget()).delete();
                         }
 
                     } else if (bindingLine != null) {

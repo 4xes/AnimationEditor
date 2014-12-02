@@ -2,6 +2,7 @@ package com.petrushin;
 
 import com.petrushin.shape.Anchor;
 import com.petrushin.shape.BoundLine;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -35,6 +36,9 @@ public class Storage extends LinkedList<HashSet<Node>>{
         currentNumberFrame = 0;
         this.add(new HashSet<Node>());
     }
+    public void saveFrame(ObservableList<Node> childrens){
+        this.get(currentNumberFrame).addAll(childrens);
+    }
 
     public HashSet<Node> nextFrame(){
         if(currentNumberFrame == getLastNumberFrame()){
@@ -53,6 +57,8 @@ public class Storage extends LinkedList<HashSet<Node>>{
     }
 
     public HashSet<Node> deleteFrame(){
+
+        //clear all
         Iterator<Node> iterator = get(currentNumberFrame).iterator();
         while(iterator.hasNext()){
             Node node = iterator.next();
