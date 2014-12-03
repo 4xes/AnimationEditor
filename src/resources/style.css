@@ -1,25 +1,19 @@
-@font-face {
-    font-family: "Metrize-Icons";
-    src: url("Metrize-Icons.ttf");
-}
-
-@font-face {
-    font-family: "Roboto";
-    src: url("Roboto-Bold.ttf");
-}
-
 .action-field {
     -fx-padding: 0 0 10 10;
     -fx-spacing: 10;
 }
 .action-num-scene{
     -fx-text-fill: #ffffff;
-    -fx-padding: 5 0 0 0;
+    -fx-padding: 0 10 0 0;
+    -fx-font-size: 14;
     /*-fx-font-weight: bold;*/
 }
 
 .action-button{
     -fx-background-color: transparent;
+}
+.action-button:disabled{
+    -fx-text-fill: #6e6b72;
 }
 .anchor{
     -fx-fill: #ec008c;
@@ -38,14 +32,12 @@ BorderPane {
     -fx-background-color: #18181d;
 }
 .text-hint{
-    -fx-font-size: 13;
+    -fx-background-color: transparent;
     -fx-fill: #ec008c;
-    -fx-underline: false;
 }
 
 .text-hint:hover{
-    -fx-cursor: hand;
-    -fx-underline: true;
+    -fx-background-color: transparent;
     -fx-fill: #ff0d96;
 }
 

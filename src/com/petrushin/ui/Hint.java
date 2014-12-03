@@ -1,10 +1,10 @@
 package com.petrushin.ui;
 
 import com.petrushin.JavaFxApplication;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
  */
 public class Hint extends VBox {
 
-    private Button buttonHint;
+    private Text buttonHint;
 
     private static boolean flagHint = false;
 
@@ -31,28 +31,28 @@ public class Hint extends VBox {
 
         vboxHint = this;
 
-
-        buttonHint = new Button();
+        Font iconFonts = FontMetrizeIcons.getFont(this, 20);
+        buttonHint = new Text(FontMetrizeIcons.QUESTION);
+        buttonHint.setFont(iconFonts);
         buttonHint.getStyleClass().add("text-hint");
 
         getChildren().addAll(textHintAddAnchor, textHintAddLine, textHintDeleteElem, textHintStartBind);
 
-        buttonHint.setOnAction(new EventHandler<ActionEvent>() {
+        buttonHint.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(ActionEvent event) {
-                if (flagHint) {
+            public void handle(MouseEvent event) {
+                if (flagHint)
                     JavaFxApplication.getInstance().getBorderPane().getChildren().remove(vboxHint);
-                    buttonHint.setText("show hint");
-                } else {
+                else
                     JavaFxApplication.getInstance().getBorderPane().getChildren().add(vboxHint);
-                    buttonHint.setText("hide hint");
-                }
                 flagHint = !flagHint;
             }
         });
 
 
         buttonHint.toFront();
+        buttonHint.setLayoutX(699);
+        buttonHint.setLayoutY(19);
         JavaFxApplication.getInstance().getBorderPane().getChildren().add(buttonHint);
     }
 }

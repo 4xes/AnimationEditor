@@ -1,11 +1,10 @@
 package com.petrushin;
 
-import com.petrushin.shape.Anchor;
-import com.petrushin.shape.BoundLine;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.text.Text;
+
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -13,70 +12,131 @@ import java.util.LinkedList;
  */
 public class Storage extends LinkedList<HashSet<Node>>{
 
-    public int currentNumberFrame;
+    public int current;
 
-    public int getLastNumberFrame() {
-        return this.size()-1;
+    public int getCurrent() {
+        return current;
     }
 
-    public int getCurrentNumberFrame() {
-        return currentNumberFrame;
-    }
-
-    private void setCurrentNumberFrame(int currentNumberFrame) {
-        this.currentNumberFrame = currentNumberFrame;
+    private void setCurrent(int current) {
+        this.current = current;
     }
 
     public void deleteShapeFromCurrentNode(Object obj){
-        get(currentNumberFrame).remove(obj);
+        get(current).remove(obj);
     }
 
     public Storage(){
         super();
-        currentNumberFrame = 0;
-        this.add(new HashSet<Node>());
-    }
-    public void saveFrame(ObservableList<Node> childrens){
-        this.get(currentNumberFrame).addAll(childrens);
+        add(null);
+        current = 0;
     }
 
-    public HashSet<Node> nextFrame(){
-        if(currentNumberFrame == getLastNumberFrame()){
-            currentNumberFrame++;
-            return new HashSet<Node>();
+    public void back(){
+        save();
+
+        if(current > 0){
+            shapes().removeAll(shapes());
+            shapes().addAll(get(--current));
         }else{
-            currentNumberFrame++;
-            return get(currentNumberFrame);
+
         }
     }
 
-    public HashSet<Node> backFrame(){
-        if(currentNumberFrame > 0)
-            currentNumberFrame--;
-        return get(currentNumberFrame);
+    public void next(){
+        save();
+        boolean currentLessLast = current < this.size() - 1;
+        System.out.println(current + " " + (this.size()-1));
+        if(currentLessLast){
+            shapes().removeAll(shapes());
+            shapes().addAll(get(++current));
+        }else{
+            add(null);
+            shapes().removeAll(shapes());
+            current++;
+        }
     }
 
-    public HashSet<Node> deleteFrame(){
-
-        //clear all
-        Iterator<Node> iterator = get(currentNumberFrame).iterator();
-        while(iterator.hasNext()){
-            Node node = iterator.next();
-            if(node instanceof BoundLine){
-                ((BoundLine)node).unbind();
-                iterator.remove();
-            }
-            else if(node instanceof Anchor){
-                iterator.remove();
-            }
-        }
-
-        if(currentNumberFrame > 0){
-            currentNumberFrame--;
-            return get(currentNumberFrame);
-        }
-        return new HashSet<Node>();
+    public void refreshActionButtons(Text textNumberText, Text buttonBack){
+        textNumberText.setText("Scene " + (current + 1) + "/" + size());
+        if(current < size() - 1)
+            buttonBack.setDisable(true);
+        else
+            buttonBack.setDisable(false);
     }
+
+
+    public void save(){
+        if(this.get(current) == null){
+            set(current, new HashSet<Node>(shapes()));
+        }else{
+            this.get(current).clear();
+            this.get(current).addAll(shapes());
+        }
+
+    }
+
+    public void delete(){
+        save();
+    }
+
+    public void copy(){
+        save();
+    }
+
+    public void print(){
+        for(Node node: get(current)){
+            System.out.println(node.getClass());
+        }
+    }
+
+    public ObservableList<Node> shapes(){
+        return JavaFxApplication.getInstance().getField().getChildren();
+    }
+
+
+
+//    public void saveFrame(ObservableList<Node> childrens){
+//        this.get(current).addAll(childrens);
+//    }
+
+//    public HashSet<Node> nextFrame(){
+//        if(current == getLastNumberFrame()){
+//            current++;
+//            return new HashSet<Node>();
+//        }else{
+//            current++;
+//            return get(current);
+//        }
+//    }
+//
+//    public HashSet<Node> backFrame(){
+//        if(current > 0)
+//            current--;
+//        return get(current);
+//    }
+//
+//    public HashSet<Node> deleteFrame(){
+//
+//        //clear all
+//        Iterator<Node> iterator = get(current).iterator();
+//        while(iterator.hasNext()){
+//            Node node = iterator.next();
+//            if(node instanceof BoundLine){
+//                ((BoundLine)node).unbind();
+//                iterator.remove();
+//            }
+//            else if(node instanceof Anchor){
+//                iterator.remove();
+//            }
+//        }
+//
+//        if(current > 0){
+//            current--;
+//            return get(current);
+//        }
+//        return new HashSet<Node>();
+//    }
 
 
 

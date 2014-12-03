@@ -12,11 +12,11 @@ public class FontMetrizeIcons{
                 .getResourceAsStream("/resources/Metrize-Icons.ttf"), size);
     }
 
-    public static final String ARROW_RIGHT = "\uE119";
+    public static final String ARROW_RIGHT = "\uE109";
 
     public static final String ARROW_LEFT = "\uE117";
 
-    public static final String QUESTION = "\\e065";
+    public static final String QUESTION = "\uE065";
 
     public static final String BIND = "\uE0AD";
 
@@ -26,7 +26,11 @@ public class FontMetrizeIcons{
 
     public static final String INFO = "\uE0A4";
 
-    public static final String CROSS = "\uE0cf";//\e0cf
+    public static final String CROSS = "\uE0cf";
+
+    public static final String EXPORT = "\uE00C";
+
+    public static final String IMPORT = "\uE0C3";
 
 
 

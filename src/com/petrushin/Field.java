@@ -2,16 +2,10 @@ package com.petrushin;
 
 import com.petrushin.shape.Anchor;
 import com.petrushin.shape.BoundLine;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Shape;
-
-import java.util.HashSet;
 
 /**
  * Created by Petrushin Alexey on 28.11.2014.
@@ -25,8 +19,6 @@ public class Field extends Pane {
 
     private BoundLine bindingLine;
     private Anchor bindingAnchor;
-
-    Storage storage = new Storage();
 
     EventHandler<MouseEvent> handlerOnMouseMoved = new EventHandler<MouseEvent>() {
         @Override
@@ -91,26 +83,6 @@ public class Field extends Pane {
         initEvents();
         //delete default focus
         requestFocus();
-    }
-    public void next(){
-        this.save();
-        this.getChildren().removeAll(this.getChildren());
-        this.getChildren().addAll(storage.nextFrame());
-    }
-    public void clear(){
-
-    }
-    public void save(){
-        storage.saveFrame(this.getChildren());
-    }
-
-
-    public void test(){
-        ObservableList<Node> list = getChildren();
-        System.out.println(list.size());
-        for(Node obj: list){
-            System.out.println(obj);
-        }
     }
 
     private void initEvents(){

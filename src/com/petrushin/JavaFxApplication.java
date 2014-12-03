@@ -19,7 +19,7 @@ public class JavaFxApplication extends Application {
 
     private Field field;
 
-
+    private Storage storage;
 
     public static JavaFxApplication getInstance(){
         if(instance == null){
@@ -36,6 +36,10 @@ public class JavaFxApplication extends Application {
         return borderPane;
     }
 
+    public Storage getStorage(){
+        return storage;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         instance = this;
@@ -45,9 +49,11 @@ public class JavaFxApplication extends Application {
         stage.show();
     }
 
+
     private void init(Stage stage){
         stage.setTitle("Animation Editor");
 
+        storage = new Storage();
 
         field = new Field();
 
@@ -63,7 +69,6 @@ public class JavaFxApplication extends Application {
         scene.getStylesheets().add("resources/style.css");
         stage.setScene(scene);
     }
-
 
 
     public static void main(String argv[]){
