@@ -1,10 +1,13 @@
 package com.petrushin;
 
+import com.petrushin.shape.BoundLine;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.text.Text;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -77,7 +80,37 @@ public class Storage extends LinkedList<HashSet<Node>>{
     }
 
     public void delete(){
-        save();
+        free();
+        if(current <= (this.size()-1)){
+             this.remove(current);
+             if(current > 0) {
+                current--;
+             }
+            if(this.size() == 0){
+                this.add(null);
+            }
+            if(this.get(current) != null){
+                shapes().addAll(this.get(current));
+            }
+        }
+
+
+    }
+
+    public void free(){
+        if(get(current) != null){
+            Iterator<Node> it = this.get(current).iterator();
+            while(it.hasNext()){
+                Node obj = it.next();
+                if(obj.getClass().equals(BoundLine.class)){
+                    ((BoundLine)obj).beFree();
+                }
+                it.remove();
+                shapes().remove(obj);
+
+            }
+        }
+        shapes().removeAll(shapes());
     }
 
     public void copy(){

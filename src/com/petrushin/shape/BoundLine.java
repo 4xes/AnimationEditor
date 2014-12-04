@@ -36,30 +36,39 @@ public class BoundLine extends Line{
         this.end.bind(this);
         bind();
     }
-    //for delete from anchor
-    public void delete(Anchor who){
+    //for deleteFromParent from anchor
+    public void deleteFromParent(Anchor who){
         unbind();
-        //delete self only in second anchor
         if(who == start && end != who && end != null){
             end.unbind(this);
         }
         if(who == end && start != who && start !=null){
             start.unbind(this);
         }
+        start = null;
+        end = null;
         Pane pane = (Pane) this.getParent();
         pane.getChildren().remove(this);
     }
 
-    //for delete self
-    public void delete(){
+    public void beFree(){
         unbind();
-        //delete self in anchors
+        //deleteFromParent self in anchors
         if(start != null){
             start.unbind(this);
+            start = null;
         }
         if(end != null){
             end.unbind(this);
+            end = null;
         }
+    }
+
+    //for deleteFromParent self
+    public void deleteFromParent(){
+        unbind();
+        beFree();
+        //deleteFromParent self in anchors
         Pane pane = (Pane) this.getParent();
         pane.getChildren().remove(this);
     }

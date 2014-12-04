@@ -59,7 +59,7 @@ public class Field extends Pane {
     public void cancelBinding(){
         if(bindingLine != null){
             removeEventHandler(MouseEvent.MOUSE_MOVED, handlerOnMouseMoved);
-            bindingLine.delete();
+            bindingLine.deleteFromParent();
             bindingLine = null;
 
         }
@@ -81,7 +81,7 @@ public class Field extends Pane {
         getStyleClass().add("edit-field");
 
         initEvents();
-        //delete default focus
+        //deleteFromParent default focus
         requestFocus();
     }
 
@@ -128,7 +128,7 @@ public class Field extends Pane {
                         if (event.getTarget().getClass().equals(Anchor.class)) {
                             ((Anchor) event.getTarget()).delete();
                         } else if (event.getTarget().getClass().equals(BoundLine.class)) {
-                            ((BoundLine) event.getTarget()).delete();
+                            ((BoundLine) event.getTarget()).deleteFromParent();
                         }
 
                     } else if (bindingLine != null) {

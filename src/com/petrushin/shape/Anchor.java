@@ -57,7 +57,7 @@ public class Anchor extends Circle {
         Iterator<BoundLine> iterator = boundLines.iterator();
         while (iterator.hasNext()) {
             BoundLine element = iterator.next();
-            element.delete(this);
+            element.deleteFromParent(this);
             iterator.remove();
         }
 

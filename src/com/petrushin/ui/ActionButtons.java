@@ -15,11 +15,6 @@ public class ActionButtons extends HBox{
     private Text textNumberScene;
 
     private static Text buttonBack;
-    private Text buttonNext;
-    private Text buttonCopy;
-    private Text buttonDelete;
-    private Text buttonImport;
-    private Text buttonExport;
 
     public Text getTextNumberScene(){
         return textNumberScene;
@@ -30,6 +25,12 @@ public class ActionButtons extends HBox{
     }
     public ActionButtons(){
         this.getStyleClass().add("action-field");
+
+        Text buttonNext;
+        Text buttonCopy;
+        Text buttonDelete;
+        Text buttonImport;
+        Text buttonExport;
 
         textNumberScene = new Text("Scene 1/1");
         textNumberScene.getStyleClass().add("action-num-scene");
