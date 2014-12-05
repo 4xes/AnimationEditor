@@ -93,7 +93,6 @@ public class Storage extends LinkedList<HashSet<Node>>{
         JavaFxApplication.getInstance().numFrameProperty().set(("Scene " + (current + 1) + "/" + size()));
     }
 
-
     public void save(){
         if(this.get(current) == null){
             set(current, new HashSet<Node>(shapes()));
@@ -101,7 +100,6 @@ public class Storage extends LinkedList<HashSet<Node>>{
             clearStorage();
             this.get(current).addAll(shapes());
         }
-
     }
 
     public void loadFrame(){
@@ -109,8 +107,8 @@ public class Storage extends LinkedList<HashSet<Node>>{
         if(nodes != null){
             loadFrame(nodes);
         }
-
     }
+
     public void loadFrame(Collection<Node> c){
         shapes().addAll(c);
         Iterator<Node> it = c.iterator();
@@ -120,8 +118,6 @@ public class Storage extends LinkedList<HashSet<Node>>{
                 node.toFront();
             }
         }
-
-
     }
 
     public void delete(){
@@ -142,10 +138,8 @@ public class Storage extends LinkedList<HashSet<Node>>{
         refreshNumFrame();
     }
 
-
     public void clearStorage(){
         //если элементы из storage не находятся на поле, то освободить от них простарство перед сохранением
-
         Iterator<Node> it = this.get(current).iterator();
         if(it == null){
             return;
@@ -169,7 +163,6 @@ public class Storage extends LinkedList<HashSet<Node>>{
                 it.remove();
             }
         }
-
     }
 
     public void clearAll(){
@@ -210,8 +203,6 @@ public class Storage extends LinkedList<HashSet<Node>>{
             }
         }
 
-
-
         Iterator<BoundLine> itLines = boundLines.iterator();
         while(itLines.hasNext()){
             BoundLine line = itLines.next();
@@ -227,7 +218,6 @@ public class Storage extends LinkedList<HashSet<Node>>{
 
         refreshNumFrame();
     }
-
 
     public ObservableList<Node> shapes(){
         return JavaFxApplication.getInstance().getField().getChildren();

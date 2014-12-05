@@ -23,7 +23,6 @@ public class Hint extends VBox {
         this.setLayoutY(30);
         this.setSpacing(8);
 
-
         Text textHintAddAnchor = new Text("Add point: double click");
         Text textHintAddLine = new Text("Add line: left click on point");
         Text textHintDeleteElem = new Text("Delete: right click");
@@ -48,7 +47,6 @@ public class Hint extends VBox {
                 flagHint = !flagHint;
             }
         });
-
 
         buttonHint.toFront();
         buttonHint.setLayoutX(699);

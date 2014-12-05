@@ -21,11 +21,9 @@ public class JavaFxApplication extends Application {
 
     private Field field;
 
-
     private Storage storage;
 
     private StringProperty numFrame;
-
 
     public static JavaFxApplication getInstance(){
         if(instance == null){
