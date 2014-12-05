@@ -20,13 +20,11 @@ public class ActionButtons extends HBox{
         return textNumberScene;
     }
 
-    public Text getButtonBack(){
-        return buttonBack;
-    }
     public ActionButtons(){
         this.getStyleClass().add("action-field");
 
         Text buttonNext;
+        Text buttonNew;
         Text buttonCopy;
         Text buttonDelete;
         Text buttonImport;
@@ -42,6 +40,10 @@ public class ActionButtons extends HBox{
         buttonNext = new Text(FontMetrizeIcons.ARROW_RIGHT);
         buttonNext.setFont(iconFonts);
         buttonNext.getStyleClass().add("action-button");
+
+        buttonNew = new Text(FontMetrizeIcons.NEW);
+        buttonNew.setFont(iconFonts);
+        buttonNew.getStyleClass().add("action-button");
 
         buttonCopy = new Text(FontMetrizeIcons.COPY);
         buttonCopy.setFont(iconFonts);
@@ -64,7 +66,7 @@ public class ActionButtons extends HBox{
             public void handle(MouseEvent event) {
                 System.out.println("buttonBack");
                 JavaFxApplication.getInstance().getStorage().back();
-                JavaFxApplication.getInstance().getStorage().refreshActionButtons(textNumberScene, buttonBack);
+                JavaFxApplication.getInstance().getStorage().refreshNumFrame(textNumberScene);
             }
         });
 
@@ -73,7 +75,16 @@ public class ActionButtons extends HBox{
             public void handle(MouseEvent event) {
                 System.out.println("buttonNext");
                 JavaFxApplication.getInstance().getStorage().next();
-                JavaFxApplication.getInstance().getStorage().refreshActionButtons(textNumberScene, buttonBack);
+                JavaFxApplication.getInstance().getStorage().refreshNumFrame(textNumberScene);
+            }
+        });
+
+        buttonNew.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("buttonNew");
+                JavaFxApplication.getInstance().getStorage()._new();
+                JavaFxApplication.getInstance().getStorage().refreshNumFrame(textNumberScene);
             }
         });
 
@@ -82,7 +93,7 @@ public class ActionButtons extends HBox{
             public void handle(MouseEvent event) {
                 System.out.println("buttonCopy");
                 JavaFxApplication.getInstance().getStorage().copy();
-                JavaFxApplication.getInstance().getStorage().refreshActionButtons(textNumberScene, buttonBack);
+                JavaFxApplication.getInstance().getStorage().refreshNumFrame(textNumberScene);
             }
         });
 
@@ -91,7 +102,7 @@ public class ActionButtons extends HBox{
             public void handle(MouseEvent event) {
                 System.out.println("buttonDelete");
                 JavaFxApplication.getInstance().getStorage().delete();
-                JavaFxApplication.getInstance().getStorage().refreshActionButtons(textNumberScene, buttonBack);
+                JavaFxApplication.getInstance().getStorage().refreshNumFrame(textNumberScene);
             }
         });
 
@@ -100,7 +111,7 @@ public class ActionButtons extends HBox{
             public void handle(MouseEvent event) {
                 System.out.println("buttonImport");
                 JavaFxApplication.getInstance().getStorage().print();
-                JavaFxApplication.getInstance().getStorage().refreshActionButtons(textNumberScene, buttonBack);
+                JavaFxApplication.getInstance().getStorage().refreshNumFrame(textNumberScene);
             }
         });
 
@@ -112,8 +123,7 @@ public class ActionButtons extends HBox{
         });
 
 
-        getChildren().addAll(textNumberScene, buttonBack, buttonNext, buttonCopy, buttonDelete, buttonImport, buttonExport);
+        getChildren().addAll(textNumberScene, buttonBack, buttonNext, buttonNew, buttonCopy, buttonDelete, buttonImport, buttonExport);
     }
-
 
 }

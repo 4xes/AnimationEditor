@@ -7,6 +7,14 @@ import javafx.scene.shape.Line;
  * Created by Petrushin Alexey on 28.11.2014.
  */
 public class BoundLine extends Line{
+    public Anchor getStart() {
+        return start;
+    }
+
+    public Anchor getEnd() {
+        return end;
+    }
+
     private Anchor start;
     private Anchor end;
 

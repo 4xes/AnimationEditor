@@ -22,6 +22,8 @@ public class FontMetrizeIcons{
 
     public static final String EXCLAMATION = "\uE0B7";
 
+    public static final String NEW = "\uE0CC";
+
     public static final String COPY = "\uE0CB";
 
     public static final String INFO = "\uE0A4";
