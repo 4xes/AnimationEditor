@@ -55,6 +55,8 @@ public class Storage extends LinkedList<HashSet<Node>>{
             current--;
             loadFrame();
         }
+
+        refreshNumFrame();
     }
 
     public void next(){
@@ -75,6 +77,8 @@ public class Storage extends LinkedList<HashSet<Node>>{
             current++;
             loadFrame();
         }
+
+        refreshNumFrame();
     }
 
     public void _new(){
@@ -82,10 +86,11 @@ public class Storage extends LinkedList<HashSet<Node>>{
         shapes().removeAll(shapes());
         this.add(++current, null);
 
+        refreshNumFrame();
     }
 
-    public void refreshNumFrame(Text textNumberText){
-        textNumberText.setText("Scene " + (current + 1) + "/" + size());
+    public void refreshNumFrame(){
+        JavaFxApplication.getInstance().numFrameProperty().set(("Scene " + (current + 1) + "/" + size()));
     }
 
 
@@ -134,7 +139,7 @@ public class Storage extends LinkedList<HashSet<Node>>{
             }
         }
 
-
+        refreshNumFrame();
     }
 
 
@@ -220,12 +225,7 @@ public class Storage extends LinkedList<HashSet<Node>>{
         this.add(++current, null);
         loadFrame(newList);
 
-    }
-
-    public void print(){
-        for(Node node: get(current)){
-            System.out.println(node.getClass());
-        }
+        refreshNumFrame();
     }
 
 

@@ -1,6 +1,7 @@
 package com.petrushin.ui;
 
 import com.petrushin.JavaFxApplication;
+import javafx.beans.property.StringProperty;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -12,25 +13,20 @@ import javafx.scene.text.Text;
  */
 public class ActionButtons extends HBox{
 
-    private Text textNumberScene;
-
-    private static Text buttonBack;
-
-    public Text getTextNumberScene(){
-        return textNumberScene;
-    }
-
     public ActionButtons(){
         this.getStyleClass().add("action-field");
 
         Text buttonNext;
+        Text buttonBack;
         Text buttonNew;
         Text buttonCopy;
         Text buttonDelete;
         Text buttonImport;
         Text buttonExport;
 
-        textNumberScene = new Text("Scene 1/1");
+        Text textNumberScene  = new Text();
+        textNumberScene.textProperty().bind(JavaFxApplication.getInstance().numFrameProperty());
+
         textNumberScene.getStyleClass().add("action-num-scene");
         Font iconFonts = FontMetrizeIcons.getFont(this, 25);
         buttonBack = new Text(FontMetrizeIcons.ARROW_LEFT);
@@ -64,61 +60,49 @@ public class ActionButtons extends HBox{
         buttonBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("buttonBack");
                 JavaFxApplication.getInstance().getStorage().back();
-                JavaFxApplication.getInstance().getStorage().refreshNumFrame(textNumberScene);
             }
         });
 
         buttonNext.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("buttonNext");
                 JavaFxApplication.getInstance().getStorage().next();
-                JavaFxApplication.getInstance().getStorage().refreshNumFrame(textNumberScene);
             }
         });
 
         buttonNew.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("buttonNew");
                 JavaFxApplication.getInstance().getStorage()._new();
-                JavaFxApplication.getInstance().getStorage().refreshNumFrame(textNumberScene);
             }
         });
 
         buttonCopy.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("buttonCopy");
                 JavaFxApplication.getInstance().getStorage().copy();
-                JavaFxApplication.getInstance().getStorage().refreshNumFrame(textNumberScene);
             }
         });
 
         buttonDelete.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("buttonDelete");
                 JavaFxApplication.getInstance().getStorage().delete();
-                JavaFxApplication.getInstance().getStorage().refreshNumFrame(textNumberScene);
             }
         });
 
         buttonImport.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("buttonImport");
-                JavaFxApplication.getInstance().getStorage().print();
-                JavaFxApplication.getInstance().getStorage().refreshNumFrame(textNumberScene);
+                System.out.println("buttonImport, not support yet");
             }
         });
 
         buttonExport.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("buttonExport");
+                System.out.println("buttonExport, not support yet");
             }
         });
 

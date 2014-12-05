@@ -3,6 +3,8 @@ package com.petrushin;
 import com.petrushin.ui.ActionButtons;
 import com.petrushin.ui.Hint;
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -19,7 +21,11 @@ public class JavaFxApplication extends Application {
 
     private Field field;
 
+
     private Storage storage;
+
+    private StringProperty numFrame;
+
 
     public static JavaFxApplication getInstance(){
         if(instance == null){
@@ -40,6 +46,10 @@ public class JavaFxApplication extends Application {
         return storage;
     }
 
+    public StringProperty numFrameProperty() {
+        return numFrame;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         instance = this;
@@ -53,6 +63,7 @@ public class JavaFxApplication extends Application {
     private void init(Stage stage){
         stage.setTitle("Animation Editor");
 
+        numFrame = new SimpleStringProperty("Scene 1/1");
         storage = new Storage();
 
         field = new Field();
