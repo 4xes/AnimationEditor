@@ -5,8 +5,10 @@ import com.petrushin.ui.Hint;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -75,6 +77,30 @@ public class JavaFxApplication extends Application {
         new ActionButtons();
 
         Scene scene = new Scene(borderPane);
+
+        scene.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(event.getText().toLowerCase().equals("a")){
+                    storage.back();
+                }else if (event.getText().toLowerCase().equals("d")) {
+                    storage.next();
+                }
+                System.out.println("Key Released: " + event.getText() + " " + event.getEventType());
+            }
+        });
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(event.getText().toLowerCase().equals("q")){
+                    storage.back();
+                }else if (event.getText().toLowerCase().equals("e")) {
+                    storage.next();
+                }
+                System.out.println("Key Released: " + event.getText() + " " + event.getEventType());
+            }
+        });
+
         scene.getStylesheets().add("resources/style.css");
         stage.setScene(scene);
     }

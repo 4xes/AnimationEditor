@@ -23,10 +23,13 @@ public class Hint extends VBox {
         this.setLayoutY(30);
         this.setSpacing(8);
 
-        Text textHintAddAnchor = new Text("Add point: double click");
-        Text textHintAddLine = new Text("Add line: left click on point");
-        Text textHintDeleteElem = new Text("Delete: right click");
-        Text textHintStartBind = new Text("Stop bind: right click");
+        Text textHintAddAnchor = new Text(
+                "Add point: double click\n" +
+                "Add line: left click on point\n" +
+                "Delete: right click\n" +
+                "Stop bind: right click\n" +
+                "Key A - back, B - next\n" +
+                "Key Q - fastback, R - fastnext");
 
         vboxHint = this;
 
@@ -35,7 +38,7 @@ public class Hint extends VBox {
         buttonHint.setFont(iconFonts);
         buttonHint.getStyleClass().add("text-hint");
 
-        getChildren().addAll(textHintAddAnchor, textHintAddLine, textHintDeleteElem, textHintStartBind);
+        getChildren().addAll(textHintAddAnchor);
 
         buttonHint.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

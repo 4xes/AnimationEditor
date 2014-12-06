@@ -4,9 +4,6 @@ import com.petrushin.shape.Anchor;
 import com.petrushin.shape.BoundLine;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.text.Text;
-
-import java.lang.reflect.AnnotatedArrayType;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -110,14 +107,20 @@ public class Storage extends LinkedList<HashSet<Node>>{
     }
 
     public void loadFrame(Collection<Node> c){
-        shapes().addAll(c);
+        //shapes().addAll(c);
         Iterator<Node> it = c.iterator();
+        HashSet<Node> buffer = new HashSet<Node>();
         while(it.hasNext()){
             Node node = it.next();
             if(node.getClass().equals(Anchor.class)){
-                node.toFront();
+                buffer.add(node);
+            } else{
+                shapes().add(node);
             }
+
         }
+        shapes().addAll(buffer);
+        buffer.clear();
     }
 
     public void delete(){
@@ -131,7 +134,7 @@ public class Storage extends LinkedList<HashSet<Node>>{
                 this.add(null);
             }
             if(this.get(current) != null){
-                shapes().addAll(this.get(current));
+                loadFrame();
             }
         }
 

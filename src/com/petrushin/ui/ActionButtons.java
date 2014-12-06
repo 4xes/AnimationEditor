@@ -1,8 +1,9 @@
 package com.petrushin.ui;
 
 import com.petrushin.JavaFxApplication;
-import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
@@ -71,6 +72,8 @@ public class ActionButtons extends HBox{
             }
         });
 
+
+
         buttonNew.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -105,7 +108,6 @@ public class ActionButtons extends HBox{
                 System.out.println("buttonExport, not support yet");
             }
         });
-
 
         getChildren().addAll(textNumberScene, buttonBack, buttonNext, buttonNew, buttonCopy, buttonDelete, buttonImport, buttonExport);
     }
