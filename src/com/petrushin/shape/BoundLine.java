@@ -6,7 +6,7 @@ import javafx.scene.shape.Line;
 /**
  * Created by Petrushin Alexey on 28.11.2014.
  */
-public class BoundLine extends Line{
+public class BoundLine extends Line implements Shape{
     public Anchor getStart() {
         return start;
     }
@@ -61,6 +61,13 @@ public class BoundLine extends Line{
 
     public void beFree(){
         unbind();
+        start = null;
+        end = null;
+    }
+
+    //for deleteFromParent self
+    public void deleteFromParent(){
+        unbind();
         //deleteFromParent self in anchors
         if(start != null){
             start.unbind(this);
@@ -70,12 +77,6 @@ public class BoundLine extends Line{
             end.unbind(this);
             end = null;
         }
-    }
-
-    //for deleteFromParent self
-    public void deleteFromParent(){
-        unbind();
-        beFree();
         //deleteFromParent self in anchors
         Pane pane = (Pane) this.getParent();
         pane.getChildren().remove(this);

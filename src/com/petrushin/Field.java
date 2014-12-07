@@ -126,7 +126,7 @@ public class Field extends Pane {
                     if (bindingLine == null) {
 
                         if (event.getTarget().getClass().equals(Anchor.class)) {
-                            ((Anchor) event.getTarget()).delete();
+                            ((Anchor) event.getTarget()).deleteFromParent();
                         } else if (event.getTarget().getClass().equals(BoundLine.class)) {
                             ((BoundLine) event.getTarget()).deleteFromParent();
                         }

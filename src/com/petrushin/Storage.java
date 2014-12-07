@@ -2,6 +2,7 @@ package com.petrushin;
 
 import com.petrushin.shape.Anchor;
 import com.petrushin.shape.BoundLine;
+import com.petrushin.shape.Shape;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import java.util.Collection;
@@ -113,6 +114,7 @@ public class Storage extends LinkedList<HashSet<Node>>{
         while(it.hasNext()){
             Node node = it.next();
             if(node.getClass().equals(Anchor.class)){
+                ((Anchor)node).setEvents();
                 buffer.add(node);
             } else{
                 shapes().add(node);
@@ -150,19 +152,14 @@ public class Storage extends LinkedList<HashSet<Node>>{
         if(shapes().size() == 0){
              while(it.hasNext()){
                 Node obj = it.next();
-                if(obj.getClass().equals(BoundLine.class)){
-                    ((BoundLine)obj).beFree();
-                }
+                ((Shape)obj).beFree();
                 it.remove();
              }
         }else{
             while(it.hasNext()){
                 Node obj = it.next();
-                if(obj.getClass().equals(BoundLine.class)){
-                    if(!shapes().contains(obj)){
-                        ((BoundLine)obj).beFree();
-                    }
-                }
+                if(!shapes().contains(obj))
+                    ((Shape)obj).beFree();
                 it.remove();
             }
         }
@@ -173,9 +170,7 @@ public class Storage extends LinkedList<HashSet<Node>>{
             Iterator<Node> it = this.get(current).iterator();
             while(it.hasNext()){
                 Node obj = it.next();
-                if(obj.getClass().equals(BoundLine.class)){
-                    ((BoundLine)obj).beFree();
-                }
+                ((Shape)obj).beFree();
                 it.remove();
                 shapes().remove(obj);
 

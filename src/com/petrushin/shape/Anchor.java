@@ -12,9 +12,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Anchor extends Circle {
+public class Anchor extends Circle implements Shape{
     private DoubleProperty boundX = new SimpleDoubleProperty();
     private DoubleProperty boundY = new SimpleDoubleProperty();
+
+    final Delta delta = new Delta();
 
     private Set<BoundLine> boundLines = new HashSet<BoundLine>();
 
@@ -41,7 +43,7 @@ public class Anchor extends Circle {
 
         boundX.bind(centerXProperty());
         boundY.bind(centerYProperty());
-        initEvents();
+        setEvents();
     }
 
 
@@ -53,15 +55,23 @@ public class Anchor extends Circle {
         boundLines.add(line);
     }
 
-    public void delete(){
+    public void beFree(){
         Iterator<BoundLine> iterator = boundLines.iterator();
         while (iterator.hasNext()) {
             BoundLine element = iterator.next();
             element.deleteFromParent(this);
             iterator.remove();
         }
+        unsetEvents();
+    }
 
-
+    public void deleteFromParent(){
+        Iterator<BoundLine> iterator = boundLines.iterator();
+        while (iterator.hasNext()) {
+            BoundLine element = iterator.next();
+            element.deleteFromParent(this);
+            iterator.remove();
+        }
 
         Pane pane = (Pane) this.getParent();
         pane.getChildren().remove(this);
@@ -74,37 +84,44 @@ public class Anchor extends Circle {
         return boundY;
     }
 
-    private void initEvents() {
-        final Delta delta = new Delta();
+    EventHandler<MouseEvent> mousePressed = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            delta.x = getCenterX() - event.getSceneX();
+            delta.y = getCenterY() - event.getSceneY();
+            toFront();
+        }
+    };
 
-        setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                delta.x = getCenterX() - event.getSceneX();
-                delta.y = getCenterY() - event.getSceneY();
-                //move up
-                toFront();
-            }
-        });
+    EventHandler<MouseEvent> mouseDragged = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            double x = event.getSceneX() + delta.x;
+            double y = event.getSceneY() + delta.y;
+            if(x < 0)
+                x = 0;
+            if(y < 0)
+                y = 0;
+            if(x > Field.RIGHT_EF)
+                x = Field.RIGHT_EF;
+            if(y > Field.BOTTOM_EF)
+                y = Field.BOTTOM_EF;
+            setCenterX(x);
+            setCenterY(y);
+        }
+    };
 
-        setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                double x = event.getSceneX() + delta.x;
-                double y = event.getSceneY() + delta.y;
-                if(x < 0)
-                    x = 0;
-                if(y < 0)
-                    y = 0;
-                if(x > Field.RIGHT_EF)
-                    x = Field.RIGHT_EF;
-                if(y > Field.BOTTOM_EF)
-                    y = Field.BOTTOM_EF;
-                setCenterX(x);
-                setCenterY(y);
-            }
-        });
+    public void setEvents() {
+        addEventFilter(MouseEvent.MOUSE_PRESSED, mousePressed);
+        addEventFilter(MouseEvent.MOUSE_DRAGGED, mouseDragged);
     }
+
+    public void unsetEvents(){
+        removeEventFilter(MouseEvent.MOUSE_PRESSED, mousePressed);
+        removeEventFilter(MouseEvent.MOUSE_DRAGGED, mouseDragged);
+    }
+
+
 
     private class Delta { double x, y; }
 }
